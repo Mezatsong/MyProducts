@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {colors} from '../../../style';
+import {colors} from '../style';
 
 export default class CustomSearchBar extends Component {
   state = {

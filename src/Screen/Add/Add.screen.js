@@ -5,7 +5,7 @@ import ImagePicker from 'react-native-image-picker';
 import { Text, TouchableHighlight, View, Alert, Image, Button } from 'react-native';
 import {colors} from '../../style';
 import {APP_NAME} from '../../constants';
-import CustomHeader from './components/CustomHeader';
+import CustomHeader from '../../components/CustomHeader';
 import styles from './Add.style';
 
 
@@ -107,7 +107,7 @@ export default class AddScreen extends Component {
   render() {
     return (
       <View>
-        <CustomHeader openDrawer={this.props.navigation.openDrawer} />
+        <CustomHeader openDrawer={this.props.navigation.openDrawer} title={'Ajouter un produit'} />
         <View style={styles.container}>
           <Form
             ref="form"

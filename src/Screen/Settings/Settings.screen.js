@@ -5,45 +5,45 @@ import {
 import {
     SettingsDividerShort,
     SettingsDividerLong,
-    SettingsEditText,
+    //SettingsEditText, use my own instead
     SettingsPicker,
     SettingsCategoryHeader,
     SettingsSwitch
 } from 'react-native-settings-components';
+import SettingsEditText from './components/MySettingsEditText';
+import { colors as c } from "../../style";
+import CustomHeader from '../../components/CustomHeader';
 
 export default class AppSettings extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-            firstname: '',
-            lastname: '',
-            username: '',
-            allowPushNotifications: false,
-            gender: '',
-        };
-        if(Platform.OS === 'ios') { 
-            StatusBar.setBarStyle('light-content');
-        } else {
-            StatusBar.setBackgroundColor('#1B0887');
-        }
-    }
+  static navigationOptions = {
+    header: null
+  }
+
+  constructor() {
+      super();
+      this.state = {
+          username: '',
+          storage: 'local',
+          remoteIp: '',
+          twoColomn: false,
+          hideNullQte: false,
+      };
+  }
 
     render() {
-        return <View style={{flex: 1}}>
-            <View style={[{padding: 16, backgroundColor: colors.blueGem},
-                (Platform.OS === 'ios') ? {paddingTop: 30, justifyContent: 'center', flexDirection: 'row'} : null]}>
-                <Text style={{color: colors.white, fontWeight: 'bold', fontSize: 18}}>Settings</Text>
-            </View>
+        return (
+          <View style={{flex: 1}}>
+            <CustomHeader title={'Paramètres'} openDrawer={this.props.navigation.openDrawer} />
             <ScrollView style={{flex: 1, backgroundColor: (Platform.OS === 'ios') ? colors.iosSettingsBackground : colors.white}}>
-                <SettingsCategoryHeader title={'My Account'} textStyle={(Platform.OS === 'android') ? {color: colors.monza} : null}/>
+                <SettingsCategoryHeader title={'Général'} textStyle={(Platform.OS === 'android') ? {color: colors.monza} : null}/>
                 <SettingsDividerLong android={false}/>
                 <SettingsEditText
-                    title="Username"
-                    dialogDescription={'Enter your username.'}
+                    title="Nom d'utilisateur"
+                    dialogDescription={'Entrer votre nom'}
                     valuePlaceholder="..."
-                    negativeButtonTitle={'Cancel'}
-                    positiveButtonTitle={'Save'}
+                    negativeButtonTitle={'Annuler'}
+                    positiveButtonTitle={'Enregistrer'}
                     onSaveValue={(value) => {
                         console.log('username:', value);
                         this.setState({
@@ -51,46 +51,6 @@ export default class AppSettings extends Component {
                         });
                     }}
                     value={this.state.username}
-                    /*dialogAndroidProps={{
-                        widgetColor: colors.monza,
-                        positiveColor: colors.monza,
-                        negativeColor: colors.monza,
-                    }}*/
-                />
-                <SettingsDividerShort/>
-                <SettingsEditText
-                    title="First Name"
-                    dialogDescription={'Enter your first name.'}
-                    valuePlaceholder="..."
-                    negativeButtonTitle={'Cancel'}
-                    positiveButtonTitle={'Save'}
-                    onSaveValue={(value) => {
-                        console.log('firstname:', value);
-                        this.setState({
-                            firstname: value
-                        });
-                    }}
-                    value={this.state.firstname}
-                    dialogAndroidProps={{
-                        widgetColor: colors.monza,
-                        positiveColor: colors.monza,
-                        negativeColor: colors.monza,
-                    }}
-                />
-                <SettingsDividerShort/>
-                <SettingsEditText
-                    title="Last Name"
-                    dialogDescription={'Enter your last name.'}
-                    valuePlaceholder="..."
-                    negativeButtonTitle={'Cancel'}
-                    positiveButtonTitle={'Save'}
-                    onSaveValue={(value) => {
-                        console.log('last name:', value);
-                        this.setState({
-                            lastname: value
-                        });
-                    }}
-                    value={this.state.lastname}
                     dialogAndroidProps={{
                         widgetColor: colors.monza,
                         positiveColor: colors.monza,
@@ -99,51 +59,82 @@ export default class AppSettings extends Component {
                 />
                 <SettingsDividerShort/>
                 <SettingsPicker
-                    title="Gender"
-                    dialogDescription={'Choose your gender.'}
+                    title="Type de stockage"
+                    dialogDescription={''}
                     possibleValues={[
-                        {label: '...', value: ''},
-                        {label: 'male', value: 'male'},
-                        {label: 'female', value: 'female'},
-                        {label: 'other', value: 'other'}
+                        {label: 'Local', value: 'local'},
+                        {label: 'Distant', value: 'remote'},
                     ]}
-                    negativeButtonTitle={'Cancel'}
-                    positiveButtonTitle={'Save'}
+                    negativeButtonTitle={'Annuler'}
+                    positiveButtonTitle={'Enregistrer'}
                     onSaveValue={value => {
                         console.log('gender:', value);
                         this.setState({
-                            gender: value
+                            storage: value
                         });
                     }}
-                    value={this.state.gender}
-                    styleModalButtonsText={{color: colors.monza}}
+                    value={this.state.storage}
+                    styleModalButtonsText={{color: colors.green}}
                 />
+                {this.state.storage == 'remote' && (
+                  <View>
+                    <SettingsDividerShort/>
+                    <SettingsEditText
+                        title="Adresse du serveur"
+                        dialogDescription={'Adresse IP'}
+                        valuePlaceholder="X.X.X.X"
+                        negativeButtonTitle={'Annuler'}
+                        positiveButtonTitle={'Enregistrer'}
+                        onSaveValue={(value) => {
+                            this.setState({
+                                remoteIp: value
+                            });
+                        }}
+                        value={this.state.remoteIp}
+                        dialogAndroidProps={{
+                            widgetColor: colors.monza,
+                            positiveColor: colors.monza,
+                            negativeColor: colors.monza,
+                        }}
+                    />
+                  </View>)}
                 <SettingsDividerLong android={false}/>
-                <SettingsCategoryHeader title={'Notifications'} textStyle={(Platform.OS === 'android') ? {color: colors.monza} : null}/>
+                <SettingsCategoryHeader title={'Affichage'} textStyle={{ fontWeight: "bold" }}/>
                 <SettingsDividerLong android={false}/>
                 <SettingsSwitch
-                    title={'Allow Push Notifications'}
+                    title={'Affichage en mode multi-colones'}
                     onSaveValue={(value) => {
-                        console.log('allow push notifications:', value);
                         this.setState({
-                            allowPushNotifications: value
+                            twoColomn: value
                         });
                     }}
-                    value={this.state.allowPushNotifications}
-                    thumbTintColor={(this.state.allowPushNotifications) ? colors.switchEnabled : colors.switchDisabled}
+                    value={this.state.twoColomn}
+                    thumbColor={(this.state.twoColomn) ? colors.switchEnabled : colors.switchDisabled}
+                />
+                <SettingsDividerShort/>
+                <SettingsSwitch
+                    title={'Masquer les produits épuisés'}
+                    onSaveValue={(value) => {
+                        this.setState({
+                            hideNullQte: value
+                        });
+                    }}
+                    value={this.state.hideNullQte}
+                    thumbColor={(this.state.hideNullQte) ? colors.switchEnabled : colors.switchDisabled}
                 />
                 <SettingsDividerLong android={false}/>
             </ScrollView>
-        </View>
+        </View>);
     }
 }
 
 const colors = {
     iosSettingsBackground: 'rgb(235,235,241)',
     white: '#FFFFFF',
-    monza: '#C70039',
-    switchEnabled: (Platform.OS === 'android') ? '#C70039' : null,
+    monza: c.green,
+    switchEnabled: (Platform.OS === 'android') ? c.green : null,
     switchDisabled: (Platform.OS === 'android') ? '#efeff3' : null,
     switchOnTintColor: (Platform.OS === 'android') ? 'rgba(199, 0, 57, 0.6)' : null,
     blueGem: '#27139A',
+    green: c.green
 };

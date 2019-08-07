@@ -6,7 +6,7 @@ import CheckAlert from 'react-native-awesome-alert';
 import UpdateItemAlert from './components/UpdateItemAlert';
 import SingleColumnItem from './components/SingleColumnItem';
 import MultipleColumnItem from './components/MutlipleColumnItem';
-import CustomHeader from './components/CustomHeader';
+import CustomHeader from '../../components/CustomHeader';
 
 
 export default class ListScreen extends Component {
@@ -83,7 +83,10 @@ export default class ListScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <CustomHeader openDrawer={this.props.navigation.openDrawer} />
+                <CustomHeader  
+                    openDrawer={this.props.navigation.openDrawer} 
+                    title={'Liste des produits'} 
+                    isSearchEnabled={true}/>
                 <CheckAlert
                     styles={{
                         modalContainer: { backgroundColor: "rgba(49,49,49,0.8)" },
