@@ -7,7 +7,9 @@ import {colors} from '../../style';
 import {APP_NAME} from '../../constants';
 import CustomHeader from '../../components/CustomHeader';
 import styles from './Add.style';
-
+import { addProduct } from '../../redux/actions';
+import { connect } from "react-redux";
+import {NavigationActions} from 'react-navigation';
 
 const Form = t.form.Form;
 
@@ -31,7 +33,7 @@ const options = {
   }
 };
 
-export default class AddScreen extends Component {
+class AddScreen extends Component {
 
   static navigationOptions = {
     header: null
@@ -41,14 +43,25 @@ export default class AddScreen extends Component {
     super(props);
     this.state = {
       filePath: {},
+      value: null
     };
   }
+
 
   onSubmit = () => {
     // call getValue() to get the values of the form
     var value = this.refs.form.getValue();
-    if (value) { // if validation fails, value will be null
-      alert(JSON.stringify(value)) // value here is an instance of Person
+    if (value && this.state.filePath.uri) { // if validation fails, value will be null
+      let product = {
+        ...value,
+        image: this.state.filePath.uri
+      }
+      this.props.addProduct(product);
+      //nagivate to list
+      const navigateAction = NavigationActions.navigate({routeName: 'List'});
+      this.props.navigation.dispatch(navigateAction);
+    }else if(!this.state.filePath.uri) {
+      this.showMissingImageError();
     }
   }
 
@@ -84,21 +97,12 @@ export default class AddScreen extends Component {
     };
 
     ImagePicker.showImagePicker(options, response => {
-      console.log('Response = ', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
-      } else {
+      if (!response.didCancel && !response.error && !response.customButton) {
         let source = response;
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
         this.setState({
-          filePath: source,
+          filePath: source
         });
       }
     });
@@ -113,6 +117,8 @@ export default class AddScreen extends Component {
             ref="form"
             type={Product}
             options={options}
+            value={this.state.value}
+            onChange={value => this.setState({value})}
           />
           <View style={{ marginBottom: 15 }}>
             <View style={styles.imageBoxContainer}>
@@ -142,3 +148,8 @@ export default class AddScreen extends Component {
     );
   }
 }
+
+
+export default connect(null, {
+  addProduct
+})(AddScreen);

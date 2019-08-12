@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {View, Text, TouchableOpacity, Image, Alert} from 'react-native';
-import {styles} from '../List.style';
-import {colors} from '../../../style';
+import {styles} from '../screens/list/List.style';
+import {colors} from '../style';
 
 export default class MultipleColumnItem extends Component {
 

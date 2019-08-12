@@ -6,9 +6,15 @@ import {NavigationActions, SafeAreaView} from 'react-navigation';
 import {ScrollView, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import routes from '../routes';
+import { connect } from 'react-redux';
+import { loadUsername } from '../redux/actions';
 
 class SideMenu extends Component {
   
+  componentDidMount() {
+    this.props.loadUsername();
+  }
+
   navigateToScreen = (route) => () => {
     const navigateAction = NavigationActions.navigate({
       routeName: route
@@ -25,13 +31,13 @@ class SideMenu extends Component {
               <Icon name="user" size={50} color={drawerLogoColor} />
             </View>
             <View style={styles.subTitle}>
-              <Text style={styles.drawerTitle}>Descartes Mam App</Text>
-              <Text style={styles.drawerEmail}>descartesoumbo@gmail.com</Text>
+              <Text style={styles.drawerTitle}>{ this.props.username }</Text>
+              <Text style={styles.drawerEmail}>Built by meztsacar@gmail.com</Text>
             </View>
           </View>
           {routes.map(route => (
             <TouchableOpacity
-              key={route.screen}
+              key={route.name}
               onPress = {this.navigateToScreen(route.name)}
               style={styles.drawerItem}
             >
@@ -56,4 +62,13 @@ SideMenu.propTypes = {
   navigation: PropTypes.object
 };
 
-export default SideMenu;
+const mapStateToProps = state => {
+  return {
+    username: state.username
+  };
+};
+
+
+export default connect(mapStateToProps, {
+  loadUsername
+})(SideMenu);

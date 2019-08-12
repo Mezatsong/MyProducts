@@ -1,8 +1,7 @@
-
 import { Dimensions, Platform, StatusBar } from 'react-native';
 import { colors } from './style';
 import { createDrawerNavigator, createAppContainer, createStackNavigator } from "react-navigation";
-import SideMenu from './Navigation/SideMenu';
+import SideMenu from './navigation/SideMenu';
 import routes from './routes';
 
 const routeConfig = {};

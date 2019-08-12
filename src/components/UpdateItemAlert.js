@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View} from 'react-native';
 import NumericInput from 'react-native-numeric-input';
-import {colors} from '../../../style';
+import {colors} from '../style';
 
 
 export default class UpdateItemAlert extends Component {
@@ -9,12 +9,15 @@ export default class UpdateItemAlert extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: props.item.quantity
+            value: props.value
         };
     }
 
     updateValue(value) {
+        if(value < 0)
+            return;
         this.setState({value});
+        this.props.onChange(value);
     }
 
     render() {

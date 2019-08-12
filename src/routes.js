@@ -1,15 +1,10 @@
-import ListScreen from './Screen/List/List.screen';
-import AddScreen from './Screen/Add/Add.screen';
-import SettingsScreen from './Screen/Settings/Settings.screen';
+import ListScreen from './screens/list/List.screen';
+import AddScreen from './screens/add/Add.screen';
+import SettingsScreen from './screens/settings/Settings.screen';
 
 
 export default [
     {
-        name: 'Settings',
-        title: 'Paramètres',
-        screen: SettingsScreen,
-        icon: 'gear'
-    },{
         name: 'List',
         title: 'Liste des produits',
         screen: ListScreen,
@@ -26,6 +21,11 @@ export default [
         title: 'Partager les produits',
         screen: AddScreen,
         icon: 'share-alt'
-    },
-    
+    }, 
+    {
+        name: 'Settings',
+        title: 'Paramètres',
+        screen: SettingsScreen,
+        icon: 'gear'
+    }
 ];

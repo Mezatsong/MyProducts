@@ -29,15 +29,15 @@ export default class CustomHeader extends Component {
         return (
             <Header
                 leftComponent={(
-                    <TouchableOpacity onPress={this.props.openDrawer}>
-                        <FontAwesome name="bars" size={20} color={colors.white} />
+                    <TouchableOpacity onPress={this.props.openDrawer} style={{marginLeft:10}}>
+                        <FontAwesome name="bars" size={25} color={colors.white} />
                     </TouchableOpacity>
                 )}
                 centerComponent={<Text style={{ fontSize:20, fontWeight:"200", color:colors.white }}>{this.props.title}</Text>}
                 rightComponent = {
                     this.props.isSearchEnabled && (
                     <TouchableOpacity onPress={() => this.setState({searchActive: !this.state.searchActive})} >
-                        <FontAwesome name={"search"} size={20} color={colors.white}/>
+                        <FontAwesome name={"search"} size={25} color={colors.white}/>
                     </TouchableOpacity>
                 )}
                 containerStyle={{

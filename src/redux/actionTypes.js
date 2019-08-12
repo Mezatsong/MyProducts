@@ -1,0 +1,18 @@
+
+export const ADD_PRODUCT = "ADD_PRODUCT";
+
+export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+
+export const REMOVE_PRODUCT = "REMOVE_PRODUCT";
+
+export const PRODUCTS_LOADED = "PRODUCTS_LOADED";
+
+
+
+export const SET_FILTER = "SET_FILTER";
+
+export const USERNAME_LOADED = "USERNAME_LOADED";
+
+export const CHUNK_LOADED = "CHUNK_LOADED";
+
+export const HIDE_NULL_QTE_LOADED = "HIDE_NULL_QTE_LOADED";

@@ -3,19 +3,17 @@ import {View} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {colors} from '../style';
+import { connect } from 'react-redux';
+import { setFilter } from '../redux/actions';
 
-export default class CustomSearchBar extends Component {
-  state = {
-    search: '',
-  };
 
-  updateSearch = search => {
-    this.setState({ search });
-  };
+class CustomSearchBar extends Component {
+
+  componentWillUnmount() {
+    this.props.setFilter('');
+  }
 
   render() {
-    const { search } = this.state;
-
     return (
       <View 
         style={{ 
@@ -26,8 +24,8 @@ export default class CustomSearchBar extends Component {
             <SearchBar
                 placeholder="Entrer le nom d'un produit..."
                 lightTheme={true}
-                onChangeText={this.updateSearch}
-                value={search}
+                value={this.props.filter}
+                onChangeText={search => this.props.setFilter(search)}
                 onCancel={this.props.onCancel}
                 containerStyle={{ 
                     flex:7, 
@@ -59,3 +57,14 @@ export default class CustomSearchBar extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  const { filter } = state;
+  return {
+    filter
+  };
+};
+
+export default connect(mapStateToProps, {
+  setFilter
+})(CustomSearchBar);
