@@ -1,6 +1,7 @@
 import ListScreen from './screens/list/List.screen';
 import AddScreen from './screens/add/Add.screen';
 import SettingsScreen from './screens/settings/Settings.screen';
+import ShareScreen from './screens/share/Share.screen';
 
 
 export default [
@@ -19,7 +20,7 @@ export default [
     {
         name: 'Share',
         title: 'Partager les produits',
-        screen: AddScreen,
+        screen: ShareScreen,
         icon: 'share-alt'
     }, 
     {

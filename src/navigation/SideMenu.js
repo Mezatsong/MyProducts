@@ -22,6 +22,11 @@ class SideMenu extends Component {
     this.props.navigation.dispatch(navigateAction);
   }
 
+
+  isDisabled = (route) => {
+    return route.name == 'Share' && !this.props.activateShareScreen
+  }
+
   render() {
     return (
       <ScrollView>
@@ -40,13 +45,14 @@ class SideMenu extends Component {
               key={route.name}
               onPress = {this.navigateToScreen(route.name)}
               style={styles.drawerItem}
+              disabled={this.isDisabled(route)}
             >
               {route.icon && (
                 <View style={styles.drawerItemLogo}>
-                  <Icon name={route.icon} size={22} color={"#034602"}/>
+                  <Icon name={route.icon} size={22} color={this.isDisabled(route) ?  "#B8D1B7" : "#034602"}/>
                 </View>
               )}
-              <Text style={{ color: "#034602" }}>{route.title}</Text>
+              <Text style={{ color: this.isDisabled(route) ?  "#B8D1B7" : "#034602" }}>{route.title}</Text>
             </TouchableOpacity>
           ))}
         </SafeAreaView>
@@ -64,7 +70,8 @@ SideMenu.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    username: state.username
+    username: state.username,
+    activateShareScreen: state.products && state.products.length > 0
   };
 };
 

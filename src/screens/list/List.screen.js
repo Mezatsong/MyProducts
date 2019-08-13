@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Text, View, FlatList} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import {styles} from './List.style';
 import {colors} from '../../style';
 import CheckAlert from 'react-native-awesome-alert';
