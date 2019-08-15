@@ -1,7 +1,8 @@
 
 export const getProductByFilter = (store) => {
-    const { products, hideNullQte } = store;
+    let { products, hideNullQte } = store;
     filter = store.filter.toLowerCase();
+    products = products || [];
     if (filter || hideNullQte)
         return products.filter(product => {
             let b = !filter || product.name.toLowerCase().includes(filter);

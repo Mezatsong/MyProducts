@@ -30,7 +30,7 @@ class SettingsScreen extends Component {
         super();
         this.state = {
             username: '',
-            storage: 'local',
+            storage: APP_CONST.SETTINGS_STORAGE_TYPE_VALUE_LOCAL,
             remoteIp: '',
             twoColomn: false,
             hideNullQte: false,
@@ -47,8 +47,8 @@ class SettingsScreen extends Component {
             APP_CONST.SETTINGS_HIDE_NULL_QTE
         ]).then(settings => {
             this.setState({
-                username: settings[0][1],
-                storage: settings[1][1],
+                username: settings[0][1] || '',
+                storage: settings[1][1] || APP_CONST.SETTINGS_STORAGE_TYPE_VALUE_LOCAL,
                 remoteIp: settings[2][1],
                 twoColomn: settings[3][1] && parseInt(settings[3][1]) == 2,
                 hideNullQte: parseInt(settings[4][1]) > 0,

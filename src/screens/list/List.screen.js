@@ -107,7 +107,7 @@ class ListScreen extends Component {
         const listData = this.props.products || [];
         const chunk = this.props.chunk;
         let data = [];
-        if (chunk == 2) //this.props.chunck;
+        if (chunk == 2)
             for (let i = 0, j = listData.length; i < j; i += chunk) {
                 data.push(listData.slice(i, i + chunk));
             }
@@ -134,7 +134,7 @@ class ListScreen extends Component {
                     checkBoxColor="red"
                     />
                 <FlatList
-                    keyExtractor={item => item.id }
+                    keyExtractor={rowOrItem => rowOrItem.id ? rowOrItem.id : rowOrItem[0].id }
                     style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
                     data={data}
                     renderItem = {this.renderItem}

@@ -20,7 +20,7 @@ const fetchLocalData = async (): Promise<Product[]> => {
     try {
         const data = await AsyncStorage.getItem(APP_CONST.STORAGE_PRODUCTS_KEY);
         const products: Product[] = JSON.parse(data);
-        return Promise.resolve(products);
+        return Promise.resolve(products || []);
     } catch (error) {
         alert("Erreur lors de la lecture des données en local");
         return Promise.reject(error);
@@ -143,7 +143,7 @@ const readSettings = async (): Promise<Setting> => {
 
     const settings: Setting = {
         username: storages[0][1],
-        storageType: storages[1][1],
+        storageType: storages[1][1] || APP_CONST.SETTINGS_STORAGE_TYPE_VALUE_LOCAL,
         endpoint: storages[2][1]
     }
 
@@ -153,7 +153,7 @@ const readSettings = async (): Promise<Setting> => {
 const getUsername = async (): Promise<string> => {
     try {
         const username = await AsyncStorage.getItem(APP_CONST.SETTINGS_USERNAME_KEY);
-        return Promise.resolve(username);
+        return Promise.resolve(username || '');
     } catch (error) {
         return Promise.resolve(APP_CONST.SETTINGS_USERNAME_DEFAULT_VALUE);
     }
@@ -167,7 +167,7 @@ const setUsername = (username): Promise<string> => {
 const getChunk = async (): Promise<number> => {
     try {
         const chunk = await AsyncStorage.getItem(APP_CONST.SETTINGS_NBR_COLUMN_KEY);
-        return Promise.resolve(+chunk);
+        return Promise.resolve(chunk ? +chunk:1);
     } catch (error) {
         return Promise.resolve(1);
     }

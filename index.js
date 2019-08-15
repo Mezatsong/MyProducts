@@ -6,6 +6,8 @@ import { AppRegistry } from 'react-native';
 import { Provider } from "react-redux";
 import store from "./src/redux/store";
 
+console.disableYellowBox = true;
+
 class AppProvider extends React.Component {
     render() {
         return (      
